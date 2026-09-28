@@ -1,0 +1,30 @@
+[
+  {
+    "noise": 0.0,
+    "Classical_CNN": 0.852,
+    "Classical_SVM": 0.706,
+    "Pure_Quantum": 0.4806666666666667,
+    "Hybrid": 0.7013333333333334
+  },
+  {
+    "noise": 0.1,
+    "Classical_CNN": 0.5253333333333333,
+    "Classical_SVM": 0.31,
+    "Pure_Quantum": 0.384,
+    "Hybrid": 0.282
+  },
+  {
+    "noise": 0.2,
+    "Classical_CNN": 0.2906666666666667,
+    "Classical_SVM": 0.2,
+    "Pure_Quantum": 0.274,
+    "Hybrid": 0.17066666666666666
+  },
+  {
+    "noise": 0.3,
+    "Classical_CNN": 0.24533333333333332,
+    "Classical_SVM": 0.2,
+    "Pure_Quantum": 0.258,
+    "Hybrid": 0.168
+  }
+]

@@ -1,0 +1,86 @@
+{
+  "Classical_CNN": {
+    "accuracy_mean": 0.854481907711327,
+    "accuracy_std": 0.009471621917331887,
+    "f1_mean": 0.8533586624532656,
+    "f1_std": 0.00852445972559871,
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "note": "Bootstrap approximation; true retraining would give similar spread. Paired t-test not claimed without full retraining."
+  },
+  "Classical_SVM": {
+    "accuracy_mean": 0.7068052746601943,
+    "accuracy_std": 0.011064515627454329,
+    "f1_mean": 0.7045735621923835,
+    "f1_std": 0.009958064064708888,
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "note": "Bootstrap approximation; true retraining would give similar spread. Paired t-test not claimed without full retraining."
+  },
+  "Classical_RF": {
+    "accuracy_mean": 0.7775206951747304,
+    "accuracy_std": 0.0062332838644458275,
+    "f1_mean": 0.7768178079133844,
+    "f1_std": 0.005609955478001227,
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "note": "Bootstrap approximation; true retraining would give similar spread. Paired t-test not claimed without full retraining."
+  },
+  "Classical_XGB": {
+    "accuracy_mean": 0.7825818557736499,
+    "accuracy_std": 0.009937274469036195,
+    "f1_mean": 0.7814861076013307,
+    "f1_std": 0.008943547022132538,
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "note": "Bootstrap approximation; true retraining would give similar spread. Paired t-test not claimed without full retraining."
+  },
+  "Pure_Quantum_VQC": {
+    "accuracy_mean": 0.47001922586068823,
+    "accuracy_std": 0.014581696623005404,
+    "f1_mean": 0.4156941863111202,
+    "f1_std": 0.013123526960704854,
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "note": "Bootstrap approximation; true retraining would give similar spread. Paired t-test not claimed without full retraining."
+  },
+  "Hybrid_Quantum": {
+    "accuracy_mean": 0.6991287338162657,
+    "accuracy_std": 0.01330651707701355,
+    "f1_mean": 0.6906075228206283,
+    "f1_std": 0.011975865369312211,
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "note": "Bootstrap approximation; true retraining would give similar spread. Paired t-test not claimed without full retraining."
+  }
+}

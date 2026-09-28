@@ -1,0 +1,13 @@
+{
+  "WITH_ENTANGLEMENT": {
+    "val_f1_best": 0.21262571697722182,
+    "test_acc": 0.24666666666666667,
+    "test_f1": 0.21519183902235897
+  },
+  "WITHOUT_ENTANGLEMENT": {
+    "val_f1_best": 0.18417810351597644,
+    "test_acc": 0.21933333333333332,
+    "test_f1": 0.18903067072880003
+  },
+  "note": "same 8D data, same init scale, Adam 0.01, subset for speed; entanglement NOT assumed better"
+}

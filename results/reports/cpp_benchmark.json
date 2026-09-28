@@ -1,0 +1,17 @@
+{
+  "N": 2000,
+  "L": 256,
+  "seed": 42,
+  "has_cpp": true,
+  "python_time_features_ms": 2823.9172999747097,
+  "cpp_time_features_ms": 12.769300024956465,
+  "speedup_features": 221.1489505654667,
+  "max_abs_diff_features": 6.071720903833011e-11,
+  "python_gen_ms_200": 2326.188300270587,
+  "python_gen_ms_extrapolated_2000": 23261.883002705872,
+  "cpp_gen_ms": 51.48150026798248,
+  "speedup_generation": 451.8493610640358,
+  "python_noise_ms": 10.502099990844727,
+  "cpp_noise_ms": 12.521700002253056,
+  "speedup_noise": 0.8387119950929236
+}

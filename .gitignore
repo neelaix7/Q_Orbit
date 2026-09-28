@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+*.pdb
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# Virtual environments (never commit vendored venvs)
+.venv/
+venv/
+env/
+quai_guard/.venv/
+
+# IDE / editors
+.vscode/
+.idea/
+*.code-workspace
+
+# Test / automation artifacts
+.playwright-mcp/
+.workbuddy-ai/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

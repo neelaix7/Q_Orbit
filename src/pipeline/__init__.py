@@ -1,0 +1,1 @@
+# pipeline package - CLI entry points for generation, training, evaluation

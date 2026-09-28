@@ -1,0 +1,30 @@
+[
+  {
+    "observation_fraction": 1.0,
+    "Classical_CNN": 0.852,
+    "Classical_SVM": 0.706,
+    "Pure_Quantum": 0.4806666666666667,
+    "Hybrid": 0.722
+  },
+  {
+    "observation_fraction": 0.75,
+    "Classical_CNN": 0.8113333333333334,
+    "Classical_SVM": 0.30866666666666664,
+    "Pure_Quantum": 0.396,
+    "Hybrid": 0.30666666666666664
+  },
+  {
+    "observation_fraction": 0.5,
+    "Classical_CNN": 0.7706666666666667,
+    "Classical_SVM": 0.2,
+    "Pure_Quantum": 0.27,
+    "Hybrid": 0.2
+  },
+  {
+    "observation_fraction": 0.25,
+    "Classical_CNN": 0.5866666666666667,
+    "Classical_SVM": 0.2,
+    "Pure_Quantum": 0.21,
+    "Hybrid": 0.2
+  }
+]

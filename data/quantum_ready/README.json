@@ -1,0 +1,21 @@
+{
+  "n_qubits": 8,
+  "encoding": "angle_RY: theta=tanh(z)*pi, |psi(x)>=x_i Ry(x_i)|0>",
+  "explained_variance": {
+    "n_components": 8,
+    "explained_variance_ratio": [
+      0.3776841461658478,
+      0.19545991718769073,
+      0.1187930703163147,
+      0.08435753732919693,
+      0.07002689689397812,
+      0.045497529208660126,
+      0.03545920550823212,
+      0.032610855996608734
+    ]
+  },
+  "why_8": "matches 8-qubit VQC/hybrid ansatz (depth 5, 94/758 params); PCA8 retains majority variance; 4/6/8 ablation in search_pure_quick.py",
+  "seed": 42,
+  "fit_on": "train only",
+  "source": "SAME master 21D features"
+}

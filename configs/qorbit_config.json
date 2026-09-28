@@ -1,0 +1,67 @@
+{
+  "project": "Q-ORBIT",
+  "title": "Adaptive Physics-Informed Quantum-Classical AI Framework for Space Object Classification from Photometric Light Curves",
+  "seed": 42,
+  "dataset": {
+    "regime": "A_controlled_synthetic",
+    "regime_B_note": "External observational validation is limited by the availability of publicly labeled data. No suitable public optical light-curve dataset for space debris with class labels was available at build time; synthetic Regime A is primary. See src/pipeline/download_real_data.py and reports/project_audit.md:3.",
+    "synthetic_path": "data/synthetic/lightcurves.npz",
+    "train_path": "data/splits/train.npz",
+    "val_path": "data/splits/val.npz",
+    "test_path": "data/splits/test.npz",
+    "observation_window_sec": 720,
+    "observation_window_desc": "720-second observation window represented by 256 resampled observations (raw 5s cadence = 144 raw samples → 256 model input)",
+    "raw_sampling": "5-second cadence, 144 raw samples per 720s window",
+    "resampled_input": "256 observations interpolated, per-curve min-max [0,1]",
+    "n_per_class": 2000,
+    "n_classes": 5,
+    "n_samples_curve": 256,
+    "class_names": ["Intact Satellite", "Dead Satellite", "Rocket Body", "Fragmentation Debris", "Spoofed Satellite"],
+    "class_map": {"0": "Intact Satellite", "1": "Dead Satellite", "2": "Rocket Body", "3": "Fragmentation Debris", "4": "Spoofed Satellite"},
+    "splits": {"train": 0.70, "val": 0.15, "test": 0.15, "stratify": true}
+  },
+  "preprocessing": {
+    "handle_missing": "linear_interpolate",
+    "normalization": "per_curve_minmax_0_1_already_done",
+    "feature_standardization": "zscore_fit_on_train_only",
+    "resampling": "none",
+    "pca": {"enabled_for_quantum": true, "n_components_options": [4, 6, 8], "default": 8}
+  },
+  "features": {
+    "n_features": 21,
+    "groups": {
+      "time_domain": ["mean","std","variance","median","skewness","kurtosis","peak_to_peak","amplitude","energy","above_median_fraction","min_value"],
+      "frequency_domain": ["dominant_freq","dominant_magnitude","harmonic_energy","fft_entropy","n_harmonics"],
+      "temporal_pattern": ["flash_count","rise_time","fall_time","eclipse_fraction","period_estimate"]
+    }
+  },
+  "classical": {
+    "svm": {"kernel": "rbf", "C": 1.0, "gamma": "scale"},
+    "random_forest": {"n_estimators": 300, "max_depth": null},
+    "xgboost": {"n_estimators": 300, "max_depth": 6, "learning_rate": 0.05},
+    "cnn": {"initial_channels": 16, "dropout": 0.3, "lr": 0.001, "epochs": 20, "batch_size": 32}
+  },
+  "quantum": {
+    "simulator": "pennylane.default.qubit",
+    "n_qubits_default": 8,
+    "n_layers_default": 2,
+    "n_qubits_options": [4,6,8],
+    "encoding": "angle_RY",
+    "ansatz": "Rot_CNOT_chain",
+    "diff_method": "backprop",
+    "pure_vqc": {"n_qubits": 8, "n_layers": 2, "lr": 0.01, "epochs": 20, "batch_size": 32},
+    "hybrid": {"n_qubits": 8, "n_layers": 2, "classical_hidden": 16, "lr": 0.01, "epochs": 20, "batch_size": 32}
+  },
+  "evaluation": {
+    "metrics": ["accuracy","precision_macro","recall_macro","f1_macro","f1_weighted","roc_auc_ovr_macro","confusion_matrix","per_class_precision_recall_f1"],
+    "averaging": "macro_and_weighted",
+    "statistical": {"n_runs": 5, "seeds": [42,43,44,45,46], "report": "mean_pm_std", "significance": "paired_t_test_where_justified"}
+  },
+  "robustness": {
+    "noise_levels": [0.0, 0.05, 0.10, 0.20, 0.30],
+    "observation_fractions": [1.0, 0.75, 0.50, 0.25],
+    "missing_fractions": [0.0, 0.05, 0.10, 0.20],
+    "apply_on_test_only": true,
+    "degradation_seed": 42
+  }
+}

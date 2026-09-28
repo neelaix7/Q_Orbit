@@ -1,0 +1,8 @@
+{
+  "test_acc": 0.776,
+  "test_f1": 0.7755198640786048,
+  "val_f1_best": 0.7595894003596346,
+  "alpha_mean": 0.9913235902786255,
+  "alpha_std": 0.0006376515957526863,
+  "note": "Prob fusion gate trained on RF vs noisy-quantum probs + 7 quality features, val-selected"
+}

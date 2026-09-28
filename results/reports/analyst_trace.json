@@ -1,0 +1,22 @@
+{
+  "input_trace": {
+    "classical_pred": 2,
+    "quantum_pred": 2,
+    "hybrid_pred": 2,
+    "signal_quality": "High",
+    "agreement": "3/3",
+    "uncertainty_label": "Low"
+  },
+  "output_lines": [
+    "## Q-ORBIT Traceable Analyst Report",
+    "- **Trace ID:** 68303 \u2014 all statements derived from measured inputs, no invented numbers.",
+    "- Classical: unavailable",
+    "- Pure Quantum (VQC): unavailable",
+    "- Hybrid: unavailable",
+    "- Signal quality: **High**",
+    "- Agreement: **-** \u2014 3/3",
+    "  Avg JS divergence: 0.000",
+    "- Uncertainty: **Low** (entropy 0.20, margin 0.80, max prob 0.90)",
+    "\n*All numbers above are measured model outputs; analyst text is templated interpretation from those values. See trace for audit.*"
+  ]
+}

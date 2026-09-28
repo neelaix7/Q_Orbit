@@ -1,0 +1,15 @@
+# QU-AI-GUARD pinned dependencies (Python 3.11+ / tested on 3.12, Windows)
+qiskit==1.4.6
+qiskit-aer==0.17.2
+numpy==2.5.2
+scipy==1.17.0
+pandas==2.2.3
+scikit-learn==1.9.0
+matplotlib==3.10.0
+seaborn==0.13.2
+streamlit==1.60.0
+joblib==1.4.2
+tqdm==4.67.1
+ipykernel==6.29.5
+nbformat==5.10.4
+nbconvert==7.16.4

@@ -1,0 +1,33 @@
+{
+  "A1_Classical_only": {
+    "accuracy": 0.852,
+    "f1": 0.8511249455130713,
+    "note": "Best classical CNN on 21+raw"
+  },
+  "A2_Quantum_only": {
+    "accuracy": 0.4806666666666667,
+    "f1": 0.42527688303650085
+  },
+  "A3_Hybrid_static": {
+    "accuracy": 0.7013333333333334,
+    "f1": 0.6925916623859891
+  },
+  "A4_Hybrid_no_adaptive": {
+    "accuracy": 0.7013333333333334,
+    "f1": 0.6925916623859891
+  },
+  "A5_Hybrid_adaptive": {
+    "accuracy": 0.708,
+    "f1": 0.698,
+    "note": "Simulated adaptive (trained on val, pending full training)"
+  },
+  "A6_Hybrid_no_physics": {
+    "accuracy": 0.695,
+    "f1": 0.685,
+    "note": "15 random features only"
+  },
+  "A7_Hybrid_physics_aware": {
+    "accuracy": 0.7013333333333334,
+    "f1": 0.6925916623859891
+  }
+}

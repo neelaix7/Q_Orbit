@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.12)
+project(qorbit_cpp)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_BUILD_TYPE Release)
+find_package(pybind11 REQUIRED)
+pybind11_add_module(qorbit_cpp qorbit_cpp_bindings.cpp qorbit_core.cpp)
+add_executable(qorbit_benchmark benchmark_standalone.cpp qorbit_core.cpp)

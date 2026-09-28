@@ -1,0 +1,1 @@
+# simulator package - physics-based light curve generation

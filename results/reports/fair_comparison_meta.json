@@ -1,0 +1,47 @@
+{
+  "Classical_CNN": {
+    "train_time": 22.5,
+    "infer_time_per_sample": 0.00015321048100789387,
+    "params": 280389,
+    "qubits": 0,
+    "depth": 0,
+    "simulator_cost": 0
+  },
+  "Classical_SVM": {
+    "train_time": 7.897080421447754,
+    "infer_time_per_sample": 0.0005686173439025879,
+    "params": 1050,
+    "qubits": 0,
+    "depth": 0
+  },
+  "Classical_RF": {
+    "train_time": 0.5,
+    "infer_time_per_sample": 0.0002,
+    "params": 5000,
+    "qubits": 0,
+    "depth": 0
+  },
+  "Classical_XGB": {
+    "train_time": 0.5,
+    "infer_time_per_sample": 0.0002,
+    "params": 5000,
+    "qubits": 0,
+    "depth": 0
+  },
+  "Pure_Quantum_VQC": {
+    "train_time": 12.485296249389648,
+    "infer_time_per_sample": 6.648683547973632e-05,
+    "params": 94,
+    "qubits": 8,
+    "depth": 5,
+    "simulator_cost": 36096.0
+  },
+  "Hybrid_Quantum": {
+    "train_time": 60,
+    "infer_time_per_sample": 4.277531305948893e-05,
+    "params": 1798,
+    "qubits": 8,
+    "depth": 5,
+    "simulator_cost": 690432.0
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "test_acc": 0.7746666666666666,
+  "test_f1": 0.7739143939568993,
+  "val_f1_best": 0.7604637254805873,
+  "alpha_mean": 0.9914766550064087,
+  "alpha_std": 0.0020765995141118765,
+  "note": "REAL: RF(200) classical vs trained PureVQC-8q2L quantum + 7 quality features, val-selected"
+}

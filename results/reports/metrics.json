@@ -1,0 +1,10 @@
+{
+  "quantum_accuracy": 68.86250000000001,
+  "cnn_accuracy": 87.0125,
+  "svm_accuracy": 74.9625,
+  "quantum_per_class_f1": 0.6831979975475224,
+  "cnn_per_class_f1": 0.8695025757129292,
+  "svm_per_class_f1": 0.7480721018559651,
+  "n_test_samples": 2000,
+  "seed": 42
+}
