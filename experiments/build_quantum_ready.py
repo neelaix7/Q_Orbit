@@ -25,8 +25,8 @@ def main():
     red.save("data/quantum_ready/reducer8.joblib")
     joblib.dump({"mean": m, "scale": s}, "data/quantum_ready/norm8.joblib")
     info = {"n_qubits": 8, "encoding": "angle_RY: theta=tanh(z)*pi, |psi(x)>=x_i Ry(x_i)|0>",
-            "explained_variance": red.info(), "why_8": "matches 8-qubit VQC/hybrid ansatz (depth 5, 94/758 params); PCA8 retains majority variance; 4/6/8 ablation in search_pure_quick.py",
-            "seed": 42, "fit_on": "train only", "source": "SAME master 21D features"}
+            "explained_variance": red.info(), "why_8": "matches 8-qubit VQC/hybrid ansatz (depth 5, 94/1798 params); PCA8 retains majority variance; 4/6/8 ablation in search_pure_quick.py",
+            "seed": 123, "regime": "clean", "fit_on": "train only", "source": "SAME master 21D features"}
     json.dump(info, open("data/quantum_ready/README.json", "w", encoding="utf-8"), indent=2)
     print("quantum_ready saved:", Qtr.shape, Qva.shape, Qte.shape, red.info())
 

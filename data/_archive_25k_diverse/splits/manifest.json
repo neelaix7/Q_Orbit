@@ -1,0 +1,12 @@
+{
+  "seed": 123,
+  "train": 17500,
+  "val": 3750,
+  "test": 3750,
+  "splits": {
+    "train": 0.7,
+    "val": 0.15,
+    "test": 0.15
+  },
+  "note": "frozen exact 70/15/15 seed123, 3500/750/750 per class"
+}

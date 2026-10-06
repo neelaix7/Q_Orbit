@@ -56,6 +56,16 @@ def test_signal():
     assert 0<=sq['signal_quality_score']<=1
     assert sq['quality_label'] in ['Low','Medium','High']
 
+def test_purity_single_and_batch():
+    from src.quantum.bloch import purity_from_bloch
+    single=np.array([0.0,0.0,1.0])  # |0> -> purity 1
+    assert float(purity_from_bloch(single))==1.0
+    bell=np.array([0.0,0.0,0.0])    # maximally mixed -> purity 0.5
+    assert float(purity_from_bloch(bell))==0.5
+    batch=np.stack([single,bell])
+    out=np.asarray(purity_from_bloch(batch))
+    assert out.shape==(2,) and abs(out[0]-1.0)<1e-9 and abs(out[1]-0.5)<1e-9
+
 if __name__=='__main__':
-    test_dataset(); test_features(); test_quantum_dims(); test_hybrid(); test_degradation(); test_fusion(); test_signal()
+    test_dataset(); test_features(); test_quantum_dims(); test_hybrid(); test_degradation(); test_fusion(); test_signal(); test_purity_single_and_batch()
     print('All tests passed')

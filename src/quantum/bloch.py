@@ -74,9 +74,10 @@ def state_probabilities(statevector: np.ndarray)->np.ndarray:
     return probs
 
 def purity_from_bloch(bloch: np.ndarray)->np.ndarray:
-    """purity = (1+|r|^2)/2 per qubit."""
-    r=np.linalg.norm(bloch, axis=1)
-    return 0.5*(1+r*r)
+    """purity = (1+|r|^2)/2 per qubit. Accepts a single (3,) vector or a batch (n,3)."""
+    b = np.asarray(bloch, dtype=float)
+    r = np.linalg.norm(b, axis=-1)
+    return 0.5 * (1 + r * r)
 
 def bloch_sphere_figure(bloch_vec, qubit_idx=0, title_suffix=""):
     """Create Plotly 3D Bloch sphere figure with arrow for single qubit."""

@@ -273,7 +273,7 @@ def main():
             else:
                 f.write("Pure quantum also underperforms classical baselines on clean test data, consistent with input representation and capacity differences.\n")
             f.write(f"\nRobustness analysis (noise/observation/missing) should be inspected to determine if hybrid exhibits stability advantages even when clean accuracy is lower.\n")
-        f.write(f"\n*All metrics computed on the same frozen 70/15/15 split (seed 42), same 1500-sample test set, fixed simulator (default.qubit). No test leakage.*\n")
+        f.write(f"\n*All metrics computed on the same frozen 70/15/15 split (seed {SEED}), same {len(y_test)}-sample test set, fixed simulator (default.qubit). No test leakage.*\n")
 
     print("Saved fair_comparison.json/md with meta")
     for k,v in results.items():

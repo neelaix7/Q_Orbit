@@ -67,7 +67,7 @@ def main():
         t_cnn={"train_time": float(ckpt.get("epoch",20))*2.5, "infer_time_per_sample":0.0001, "params": sum(p.numel() for p in cnn.parameters()), "val_acc_best": metrics_val_cnn["accuracy"]}
         print(f"CNN (loaded) val acc {metrics_val_cnn['accuracy']:.4f} f1 {metrics_val_cnn['f1_macro']:.4f} | test acc {metrics_test_cnn['accuracy']:.4f}")
     else:
-        cnn, t_cnn = train_cnn_on_curves(curves_train,y_train,curves_val,y_val, epochs=10, batch_size=CFG["classical"]["cnn"]["batch_size"], lr=CFG["classical"]["cnn"]["lr"])
+        cnn, t_cnn = train_cnn_on_curves(curves_train,y_train,curves_val,y_val, epochs=20, batch_size=64, lr=CFG["classical"]["cnn"]["lr"])
         _,_,metrics_val_cnn = evaluate_cnn(cnn, curves_val, y_val)
         _,_,metrics_test_cnn = evaluate_cnn(cnn, curves_test, y_test)
         torch.save({"model_state_dict":cnn.state_dict(),"accuracy":metrics_test_cnn["accuracy"]*100},"models/classical_cnn_model.pt")

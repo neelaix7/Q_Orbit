@@ -3,7 +3,7 @@
 **Seed 42, Frozen 70/15/15 (7000/1500/1500), 720s window →256 resampled, 10k curves (2k/class)**
 
 ## 1. Abstract
-Q-ORBIT compares classical (CNN 85.20%), pure quantum VQC (48.07%) and hybrid (72.20%) plus adaptive fusion (77.60%) on same test. Best classical remains CNN; hybrid beats pure by 29.8pp F1. Overlap experiment shows easy RF 77.60% vs overlapping 39.33% — proving difficulty via overlapping physics.
+Q-ORBIT compares classical (CNN 85.20%), pure quantum VQC (48.07%) and hybrid (72.20%) plus adaptive fusion (77.47%) on same test. Best classical remains CNN; hybrid beats pure by 29.8pp F1. Overlap experiment shows easy RF 77.60% vs overlapping 39.33% — proving difficulty via overlapping physics.
 
 ## 2. Problem Statement
 Photometric light curves (brightness over time) of tumbling space objects encode geometry/rotation; 5 classes: Intact, Dead, Rocket Body, Fragment, Spoofed (hardest, mimics rocket). Must classify from noisy, possibly incomplete observation.

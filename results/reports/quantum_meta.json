@@ -3,23 +3,23 @@
     "n_qubits": 0,
     "circuit_depth": 0,
     "params": 280389,
-    "train_time": 22.5,
-    "infer_time": 0.00015321048100789387
+    "train_time": 50.0,
+    "infer_time": 5.179265340169271e-05
   },
   "Pure_Quantum_VQC": {
     "n_qubits": 8,
-    "circuit_depth": 5,
-    "params": 94,
-    "train_time": 12.485296249389648,
-    "infer_time": 6.648683547973632e-05,
-    "simulator_cost": 36096.0
+    "circuit_depth": 7,
+    "params": 118,
+    "train_time": 473.2460205554962,
+    "infer_time": 8.613319396972656e-05,
+    "simulator_cost": 113280.0
   },
   "Hybrid_Quantum": {
     "n_qubits": 8,
     "circuit_depth": 5,
     "params": 1798,
     "train_time": 60,
-    "infer_time": 4.277531305948893e-05,
-    "simulator_cost": 690432.0
+    "infer_time": 7.040011088053386e-05,
+    "simulator_cost": 1726080.0
   }
 }

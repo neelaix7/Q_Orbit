@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Literal
 
-SEED = 42
+SEED = 123
 RNG = __import__("numpy").random.default_rng(SEED)
 
 # --- Light curve generation ---
@@ -63,6 +63,10 @@ TEST_SIZE = 0.2
 STRATIFY = True
 
 # --- Noise / difficulty ---
+# 25k regime: per-sample realistic variation (photon noise U[0.01,0.05],
+# dropout U[0.03,0.10], exposure jitter sigma 0.05). Class 2/4 share
+# 350-500s tumble band with ~12% boundary-overlap sampling.
 NOISE_STD_RANGE = (0.01, 0.05)
-DROPOUT_RATE = 0.1
+DROPOUT_RATE = 0.05
+DROPOUT_RANGE = (0.03, 0.10)
 EXPOSURE_VARIANCE = 0.05

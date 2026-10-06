@@ -257,14 +257,18 @@ def test_backend_lookup_by_name():
 
 
 def test_lab_page_has_no_eager_aer_import():
-    """The Lab pages must not import the Aer backend at module level (unused + crash risk)."""
-    for rel in ("app/pages/1_Quantum_Lab.py", "app/quantum_lab.py"):
-        p = PROJECT_ROOT / rel
-        if not p.exists():
-            continue
+    """Quantum Lab / playground pages were removed from the active site.
+
+    They must not exist under app/pages/ (archived copies under app/_archive/
+    are fine — they never execute). Remaining pages must not import the Aer
+    backend at module level (unused + crash risk).
+    """
+    lab_pages = list((PROJECT_ROOT / "app" / "pages").glob("*Lab*.py"))
+    assert not lab_pages, f"lab pages still active: {lab_pages}"
+    for p in (PROJECT_ROOT / "app" / "pages").glob("*.py"):
         src = p.read_text(encoding="utf-8")
         assert "from src.quantum.backends.aer_backend import AerBackend" not in src, (
-            f"{rel} imports AerBackend at module level"
+            f"{p.name} imports AerBackend at module level"
         )
 
 

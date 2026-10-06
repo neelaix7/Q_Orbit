@@ -44,7 +44,8 @@ def main():
     _rf = joblib.load("models/classical_rf_model.joblib")
     rf = _rf["model"] if isinstance(_rf, dict) and "model" in _rf else _rf
     pc_tr, pc_va, pc_te = rf.predict_proba(Xtr), rf.predict_proba(Xva), rf.predict_proba(Xte)
-    red = QuantumReducer.load("models/pure_vqc_reducer.joblib")
+    red_path = "models/reducer_8q.joblib" if os.path.exists("models/reducer_8q.joblib") else "models/pure_vqc_reducer.joblib"
+    red = QuantumReducer.load(red_path)
     qd = np.load("data/quantum_ready/train8.npz") if os.path.exists("data/quantum_ready/train8.npz") else None
     # norm stats used in train_pure_quantum: recompute from train for stability
     Xq_tr_full = red.transform(Ftr)

@@ -18,20 +18,38 @@ def main():
     parser.add_argument(
         "--n-per-class",
         type=int,
-        default=2000,
-        help="Number of light curves to generate per class (default: 2000)",
+        default=5000,
+        help="Number of light curves to generate per class (default: 5000 for 25k)",
     )
     parser.add_argument(
         "--noise-std",
         type=float,
-        default=0.02,
-        help="Standard deviation of Gaussian photon noise (default: 0.02)",
+        default=None,
+        help="Fixed Gaussian photon noise std; omit/None => diverse per-sample U[0.01,0.05]",
+    )
+    parser.add_argument(
+        "--diverse",
+        action="store_true",
+        default=True,
+        help="Per-sample noise/dropout/exposure diversity + class-2/4 overlap (default: True)",
+    )
+    parser.add_argument(
+        "--no-diverse",
+        dest="diverse",
+        action="store_false",
+        help="Disable diversity mode (fixed noise/dropout)",
+    )
+    parser.add_argument(
+        "--clean",
+        action="store_true",
+        default=False,
+        help="Clean regime: fixed noise 0.02, fixed 5%% dropout, no exposure jitter, no class-2/4 overlap",
     )
     parser.add_argument(
         "--seed",
         type=int,
         default=SEED,
-        help="Random seed for reproducibility (default: 42)",
+        help="Random seed for reproducibility (default: 123 for 25k regime)",
     )
     parser.add_argument(
         "--output",
@@ -49,6 +67,8 @@ def main():
         noise_std=args.noise_std,
         seed=args.seed,
         save_path=args.output,
+        diverse=args.diverse,
+        clean=args.clean,
     )
 
     curves = dataset["curves"]
@@ -86,6 +106,23 @@ def main():
 
     print(f"  Saved train split: data/synthetic/lightcurves_train.npz")
     print(f"  Saved test split: data/synthetic/lightcurves_test.npz")
+
+    # Rebuild frozen 70/15/15 splits used for all fair comparisons
+    from src.data.splits import create_frozen_splits
+    import json as _json
+    create_frozen_splits(args.output, "data/splits", args.seed,
+                         train=0.70, val=0.15, test=0.15, force=True)
+    _man_path = "data/splits/manifest.json"
+    _man = _json.load(open(_man_path))
+    _man["regime"] = "clean" if args.clean else "diverse"
+    _man["note"] = (
+        "frozen 70/15/15 seed123 clean regime (fixed noise 0.02, "
+        "fixed 5% dropout, no jitter, no class overlap)"
+        if args.clean else
+        "frozen exact 70/15/15 seed123, 3500/750/750 per class"
+    )
+    _json.dump(_man, open(_man_path, "w"), indent=2)
+    print(f"  Rebuilt frozen splits with regime={_man['regime']}")
 
 
 if __name__ == "__main__":

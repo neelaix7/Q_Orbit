@@ -1,0 +1,7 @@
+{
+  "seed": 42,
+  "train": 7000,
+  "val": 1500,
+  "test": 1500,
+  "note": "frozen split, stratify, derived from lightcurves.npz seed42 70/15/15"
+}

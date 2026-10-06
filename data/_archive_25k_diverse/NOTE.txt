@@ -1,0 +1,1 @@
+Diverse 25k regime (seed 123): per-sample noise U[0.01,0.05], dropout U[0.03,0.10], exposure jitter, ~12pct class-2/4 overlap. Archived 2026-10-04 before clean-regime migration. Diverse-regime results: CNN 85.95pct / Hybrid-B 72.96pct / Pure 55.63pct / Adaptive 77.01pct.

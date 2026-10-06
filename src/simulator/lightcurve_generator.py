@@ -8,7 +8,11 @@ import numpy as np
 _RNG = np.random.default_rng(SEED if 'SEED' in dir() else 42)
 
 from .config import SEED
-_RNG = np.random.default_rng(SEED)
+import numpy as _np
+
+def _get_rng(seed=None):
+    """Return a seeded RNG. Uses SEED default for reproducibility."""
+    return _np.random.default_rng(SEED if seed is None else seed)
 
 from .physics import (
     ObjectState,
@@ -47,12 +51,28 @@ CLASS_PARAMS: Dict[int, ClassParams] = {
 }
 
 
-def sample_class_params(cls: int) -> ClassParams:
-    """Sample tumble/optical parameters for a given class."""
+def sample_class_params(cls: int, rng=None, clean: bool = False) -> ClassParams:
+    """Sample tumble/optical parameters for a given class.
+
+    clean=True disables the class-2/4 boundary-overlap injection, giving
+    well-separated class parameter ranges (clean regime).
+    """
+    rng = _RNG if rng is None else rng
     cp = CLASS_PARAMS[cls]
-    tp = float(_RNG.uniform(cp.tumble_period[0], cp.tumble_period[1]))
-    ar = float(_RNG.uniform(cp.aspect_ratio[0], cp.aspect_ratio[1]))
-    rf = float(_RNG.uniform(cp.reflectivity[0], cp.reflectivity[1]))
+    tp = float(rng.uniform(cp.tumble_period[0], cp.tumble_period[1]))
+    # Realistic boundary overlap: ~12% of Rocket Body (2) / Spoofed (4)
+    # samples drift toward the shared 350-500s boundary region with
+    # overlapping reflectivity, preserving physics while adding challenge.
+    # Skipped in clean mode.
+    if not clean and cls in (2, 4) and rng.random() < 0.12:
+        tp = float(rng.uniform(350, 430))
+    ar = float(rng.uniform(cp.aspect_ratio[0], cp.aspect_ratio[1]))
+    rf = float(rng.uniform(cp.reflectivity[0], cp.reflectivity[1]))
+    if not clean and cls == 2 and rng.random() < 0.12:
+        # rocket bodies with degraded/low reflectivity overlap spoofed range
+        rf = float(rng.uniform(0.05, 0.15))
+    elif not clean and cls == 4 and rng.random() < 0.10:
+        rf = float(rng.uniform(0.08, 0.18))
     return ClassParams(tumble_period=tp, aspect_ratio=ar, reflectivity=rf, n_faces=cp.n_faces)
 
 
@@ -81,30 +101,47 @@ def generate_sun_observer_geometry(times: np.ndarray,
 
 
 def generate_single_light_curve(cls: int,
-                                n_samples: int = N_SAMPLES,
-                                add_noise: bool = True,
-                                noise_std: float = 0.02,
-                                add_dropouts: bool = True) -> Tuple[np.ndarray, int]:
-    """Generate one light curve for a given class."""
-    params = sample_class_params(cls)
+                                 n_samples: int = N_SAMPLES,
+                                 add_noise: bool = True,
+                                 noise_std: float | None = 0.02,
+                                 add_dropouts: bool = True,
+                                 dropout_rate: float | None = 0.05,
+                                 rng=None,
+                                 clean: bool = False) -> Tuple[np.ndarray, int]:
+    """Generate one light curve for a given class.
+
+    Diversity mode: pass noise_std=None / dropout_rate=None to sample
+    per-curve realistic variation (photon noise U[0.01,0.05],
+    dropout U[0.03,0.10], exposure jitter). Preserves same physics.
+
+    clean=True: fixed noise/dropout, no exposure-gain jitter, no
+    class-2/4 boundary overlap (clean regime, matches old 10k protocol
+    with fixed noise 0.02 + fixed 5% dropout).
+    """
+    rng = _RNG if rng is None else rng
+    if noise_std is None:
+        noise_std = float(rng.uniform(0.01, 0.05))
+    if dropout_rate is None:
+        dropout_rate = float(rng.uniform(0.03, 0.10))
+    params = sample_class_params(cls, rng=rng, clean=clean)
     total_duration = TOTAL_DURATION_SEC
     sample_interval = total_duration / (n_samples - 1)
     times = np.linspace(0, total_duration, n_samples)
     sun_dirs, obs_dirs = generate_sun_observer_geometry(times)
 
     tp = params.tumble_period
-    pp = max(tp * 3.0, 200.0 + _RNG.uniform(50, 150))
-    spin_axis = _RNG.normal(0, 1, 3)
+    pp = max(tp * 3.0, 200.0 + rng.uniform(50, 150))
+    spin_axis = rng.normal(0, 1, 3)
     spin_axis = spin_axis / np.linalg.norm(spin_axis)
-    phase = _RNG.uniform(0, 2 * np.pi)
+    phase = rng.uniform(0, 2 * np.pi)
 
     state = ObjectState(
         semi_major_axis_km=400.0,
         eccentricity=0.001,
-        inclination_deg=_RNG.uniform(0, 360),
-        raan_deg=_RNG.uniform(0, 360),
-        arg_of_perigee_deg=_RNG.uniform(0, 360),
-        true_anomaly_deg=_RNG.uniform(0, 360),
+        inclination_deg=rng.uniform(0, 360),
+        raan_deg=rng.uniform(0, 360),
+        arg_of_perigee_deg=rng.uniform(0, 360),
+        true_anomaly_deg=rng.uniform(0, 360),
         tumble_period_s=tp,
         precession_period_s=pp,
         spin_axis=spin_axis,
@@ -129,12 +166,16 @@ def generate_single_light_curve(cls: int,
         curve = f(np.linspace(0, total_duration, n_samples))
 
     if add_noise:
-        noise = _RNG.normal(0, noise_std, n_samples)
+        noise = rng.normal(0, noise_std, n_samples)
         curve = curve + noise
+        if not clean:
+            # exposure/illumination jitter: realistic per-curve gain variation
+            gain = 1.0 + float(rng.normal(0, 0.05))
+            curve = curve * gain
 
     if add_dropouts:
-        n_dropouts = max(1, int(0.05 * n_samples))
-        dropout_indices = _RNG.choice(n_samples, min(n_dropouts, n_samples - 1), replace=False)
+        n_dropouts = max(1, int(dropout_rate * n_samples))
+        dropout_indices = rng.choice(n_samples, min(n_dropouts, n_samples - 1), replace=False)
         curve[dropout_indices] = np.nan
         valid_mask = ~np.isnan(curve)
         if valid_mask.any() and valid_mask.sum() > 1:
@@ -155,17 +196,36 @@ def generate_single_light_curve(cls: int,
 
 
 def generate_dataset(n_per_class: int = 2000,
-                     noise_std: float = 0.02,
-                     seed: int = 42,
-                     save_path: str = "data/synthetic/lightcurves.npz") -> Dict[str, np.ndarray]:
-    """Generate the full synthetic dataset for all 5 classes."""
+                     noise_std: float | None = None,
+                     seed: int = 123,
+                     save_path: str = "data/synthetic/lightcurves.npz",
+                     diverse: bool = True,
+                     clean: bool = False) -> Dict[str, np.ndarray]:
+    """Generate the full synthetic dataset for all 5 classes.
+
+    diverse=True (default for 25k): per-sample noise/dropout/exposure
+    variation + controlled class-2/4 boundary overlap. Same physics.
+
+    clean=True: clean regime — fixed noise 0.02, fixed 5% dropout, no
+    exposure jitter, no class-2/4 overlap. Overrides diverse.
+    """
     rng = np.random.default_rng(seed)
     curves = []
     labels = []
 
     for cls in range(5):
         for i in range(n_per_class):
-            curve, label = generate_single_light_curve(cls, noise_std=noise_std)
+            if clean:
+                curve, label = generate_single_light_curve(
+                    cls, noise_std=0.02, dropout_rate=0.05,
+                    rng=rng, clean=True)
+            elif diverse:
+                curve, label = generate_single_light_curve(
+                    cls, noise_std=None, dropout_rate=None, rng=rng)
+            else:
+                curve, label = generate_single_light_curve(
+                    cls, noise_std=(noise_std if noise_std is not None else 0.02),
+                    rng=rng)
             curves.append(curve)
             labels.append(label)
 

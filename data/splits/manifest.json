@@ -1,7 +1,13 @@
 {
-  "seed": 42,
-  "train": 7000,
-  "val": 1500,
-  "test": 1500,
-  "note": "frozen split, stratify, derived from lightcurves.npz seed42 70/15/15"
+  "seed": 123,
+  "train": 17499,
+  "val": 3751,
+  "test": 3750,
+  "splits": {
+    "train": 0.7,
+    "val": 0.15,
+    "test": 0.15
+  },
+  "regime": "clean",
+  "note": "frozen exact 70/15/15 seed123 clean regime (fixed noise 0.02, fixed 5% dropout, no jitter, no class overlap)"
 }

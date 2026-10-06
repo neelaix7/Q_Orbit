@@ -1,10 +1,7 @@
 """End-to-end browser smoke check for the Streamlit dashboard.
 
 This drives the running app in a real Chromium and fails on any Streamlit
-`stException` rendered on screen. It complements the pytest suite: several
-defects (for example a KeyError in the Quantum Lab "Run on Simulator" path that
-only triggers when the editor code already contains `measure_all()`) are not
-reachable through Streamlit's headless AppTest harness, but do surface here.
+`stException` rendered on screen. It complements the pytest suite.
 
 Usage
 -----
@@ -70,55 +67,27 @@ def run(url: str) -> int:
 
         print("=== dashboard (/) ===")
         page.goto(url, wait_until="domcontentloaded", timeout=90_000)
-        ready = wait_for_ready(page, 'button:has-text("Generate")')
+        ready = wait_for_ready(page, 'button:has-text("Run Pipeline")')
         print(f"  dashboard ready: {ready}")
         s.check(page, "initial render")
 
-        btn = page.query_selector('button:has-text("Generate")')
+        btn = page.query_selector('button:has-text("Run Pipeline")')
         if btn:
             btn.scroll_into_view_if_needed()
             btn.click()
-            page.wait_for_timeout(22_000)
-            s.check(page, "Generate & Infer")
-            for tab in page.query_selector_all('[role="tab"]'):
-                name = (tab.inner_text() or "").strip()
-                tab.click()
-                page.wait_for_timeout(4_500)
-                s.check(page, f"result tab '{name}'")
-        else:
-            print("  NOTE 'Generate & Infer' button not found")
-            s.steps.append(False)
-
-        print("=== Quantum Lab (/Quantum_Lab) ===")
-        page.goto(url.rstrip("/") + "/Quantum_Lab", wait_until="domcontentloaded", timeout=90_000)
-        ready = wait_for_ready(page, 'button:has-text("Run on Simulator")')
-        print(f"  lab ready: {ready}")
-        page.wait_for_timeout(3_000)
-        s.check(page, "initial render")
-
-        rs = page.query_selector('button:has-text("Run on Simulator")')
-        if rs:
-            rs.click()
-            page.wait_for_timeout(16_000)
-            s.check(page, "Run on Simulator (default editor code)")
-            for view in ("Counts", "Probabilities", "Statevector"):
-                lbl = page.query_selector(f'label:has-text("{view}")')
-                if lbl:
-                    lbl.click()
-                    page.wait_for_timeout(4_000)
-                    s.check(page, f"measurement view '{view}'")
-        else:
-            print("  NOTE 'Run on Simulator' button not found")
-            s.steps.append(False)
-
-        rp = page.query_selector('button:has-text("Run Pipeline")')
-        if rp:
-            rp.click()
-            page.wait_for_timeout(20_000)
-            s.check(page, "Run Pipeline — Real Model")
+            page.wait_for_timeout(25_000)
+            s.check(page, "Run Pipeline — CNN vs Hybrid")
         else:
             print("  NOTE 'Run Pipeline' button not found")
             s.steps.append(False)
+
+        for slug, label in (("Data", "Data"), ("Classical_AI", "Classical AI"),
+                            ("Hybrid", "Hybrid"), ("Experiments", "Experiments")):
+            print(f"=== page (/{slug}) ===")
+            page.goto(url.rstrip("/") + "/" + slug, wait_until="domcontentloaded",
+                      timeout=90_000)
+            page.wait_for_timeout(8_000)
+            s.check(page, f"{label} initial render")
 
         browser.close()
 

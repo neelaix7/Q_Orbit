@@ -1,30 +1,30 @@
 [
   {
     "missing_fraction": 0.0,
-    "Classical_CNN": 0.852,
-    "Classical_SVM": 0.706,
-    "Pure_Quantum": 0.4806666666666667,
-    "Hybrid": 0.722
+    "Classical_CNN": 0.8776,
+    "Classical_SVM": 0.74,
+    "Pure_Quantum": 0.6208,
+    "Hybrid": 0.7541333333333333
   },
   {
     "missing_fraction": 0.05,
-    "Classical_CNN": 0.8486666666666667,
-    "Classical_SVM": 0.6613333333333333,
-    "Pure_Quantum": 0.482,
-    "Hybrid": 0.6733333333333333
+    "Classical_CNN": 0.8813333333333333,
+    "Classical_SVM": 0.6933333333333334,
+    "Pure_Quantum": 0.6173333333333333,
+    "Hybrid": 0.7037333333333333
   },
   {
     "missing_fraction": 0.1,
-    "Classical_CNN": 0.846,
-    "Classical_SVM": 0.6013333333333334,
-    "Pure_Quantum": 0.47533333333333333,
-    "Hybrid": 0.608
+    "Classical_CNN": 0.8818666666666667,
+    "Classical_SVM": 0.6344,
+    "Pure_Quantum": 0.6186666666666667,
+    "Hybrid": 0.6392
   },
   {
     "missing_fraction": 0.2,
-    "Classical_CNN": 0.8506666666666667,
-    "Classical_SVM": 0.5293333333333333,
-    "Pure_Quantum": 0.47,
-    "Hybrid": 0.528
+    "Classical_CNN": 0.8776,
+    "Classical_SVM": 0.5490666666666667,
+    "Pure_Quantum": 0.612,
+    "Hybrid": 0.5648
   }
 ]

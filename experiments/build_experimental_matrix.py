@@ -25,7 +25,7 @@ with open(f"{base}/experimental_matrix.csv","w",newline="",encoding="utf-8") as 
     w=csv.DictWriter(f, fieldnames=["condition","Classical","Quantum","Hybrid","Adaptive"])
     w.writeheader(); w.writerows(rows)
 with open(f"{base}/experimental_matrix.md","w",encoding="utf-8") as f:
-    f.write("# Experimental Matrix — Accuracy across conditions (same 1500 test)\n\n")
+    f.write("# Experimental Matrix — Accuracy across conditions (same 3750 test, seed 123)\n\n")
     f.write("| Condition | Classical | Quantum | Hybrid | Adaptive Hybrid |\n|---|---|---|---|---|\n")
     for r in rows:
         f.write(f"| {r['condition']} | {r['Classical']:.4f} | {r['Quantum']:.4f} | {r['Hybrid']:.4f} | {r['Adaptive']:.4f} |\n")
